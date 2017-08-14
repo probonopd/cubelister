@@ -3,6 +3,10 @@ compiler: gcc
 sudo: require
 dist: trusty
 
+before_install:
+    - sudo add-apt-repository 'deb http://repos.codelite.org/wx3.1.0/ubuntu/ trusty universe'
+    - sudo apt-get update -qq
+    
 install:
     - sudo apt-get -y install intltool libwxbase3.0-dev libwxgtk3.0-dev
 
