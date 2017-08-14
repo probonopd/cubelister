@@ -18,7 +18,6 @@ script:
   - ( cd appdir/ ; find usr/ -type f -exec sed -i -e "s|/usr|././|g" {} \; )
   - ( cd appdir/ ; sed -i 's/\.png//g' usr/share/applications/*.desktop ) # Dear upstream, please change this in desktop.in
   - ( cd appdir/usr/ ; ln -s ../lib/csl/plugins/ . )
-  - rm usr/lib/libharfbuzz.* # Workaround for: csl: symbol lookup error: /usr/lib64/libpangoft2-1.0.so.0: undefined symbol: hb_buffer_set_cluster_level
   - export LD_LIBRARY_PATH=appdir/usr/lib:appdir/usr/lib/csl:appdir/usr/lib/csl/plugins
   - FILES=$(find appdir/ -type f -name '*.so*' -or -name '*.so' -or -executable)
   - for FILE in $FILES; do echo $FILE; ldd $FILE; echo ===; done
@@ -26,6 +25,7 @@ script:
   - chmod a+x linuxdeployqt*.AppImage
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -bundle-non-qt-libs
   - ( cd appdir ; rm AppRun ; wget -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/AppRun-x86_64" -O AppRun ; chmod a+x AppRun )
+  - rm usr/lib/libharfbuzz.* # Workaround for: csl: symbol lookup error: /usr/lib64/libpangoft2-1.0.so.0: undefined symbol: hb_buffer_set_cluster_level
   - ./linuxdeployqt*.AppImage --appimage-extract
   - PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool ./appdir/
   
