@@ -25,7 +25,6 @@ script:
   - ( cd appdir/usr/lib ; ln -s libcsltools.so libcsltools.so.1 ) 
   - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
   - chmod a+x linuxdeployqt*.AppImage
-  - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -bundle-non-qt-libs
   - ( cd appdir ; rm AppRun ; wget -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/AppRun-x86_64" -O AppRun ; chmod a+x AppRun )
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -appimage
