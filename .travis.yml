@@ -17,7 +17,7 @@ script:
   - make install DESTDIR=$(readlink -f appdir) ; find appdir/
   - ( cd appdir/ ; find usr/ -type f -executable -exec sed -i -e "s|/usr|././|g" {} \; )
   - ( cd appdir/ ; sed -i 's/\.png//g' usr/share/applications/*.desktop ) # Dear upstream, please change this in desktop.in
-  - ( cd appdir/usr/bin ; ln -s ln -s ../lib/csl/plugins/ . ) # Any idea why it searches in this weird place?
+  - ( cd appdir/usr/bin ; ln -s ../lib/csl/plugins/ . ) # Any idea why it searches in this weird place?
   - export LD_LIBRARY_PATH=appdir/usr/lib:appdir/usr/lib/csl:appdir/usr/lib/csl/plugins
   - FILES=$(find appdir/ -type f -name '*.so*' -or -name '*.so' -or -executable)
   - for FILE in $FILES; do echo $FILE; ldd $FILE; echo ===; done
