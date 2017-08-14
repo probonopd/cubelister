@@ -11,6 +11,7 @@ install:
     - # sudo apt-get -y install qt59base
 
 script:
+  - ./autogen.sh
   - ./configure --prefix=/usr CPPFLAGS=-DNDEBUG
   - make -j$(nproc)
   - make install DESTDIR=$(readlink -f appdir) ; find appdir/
@@ -20,6 +21,7 @@ script:
   - chmod a+x linuxdeployqt*.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -bundle-non-qt-libs
+  - ( cd appdir ; rm AppRun ; wget -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/AppRun-x86_64" -O AppRun ; chmod a+x AppRun )
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -appimage
 
 after_success:
