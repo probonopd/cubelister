@@ -3,10 +3,6 @@ compiler: gcc
 sudo: require
 dist: trusty
 
-before_install:
-    - sudo add-apt-repository ppa:beineri/opt-qt59-trusty -y
-    - sudo apt-get update -qq
-
 install:
     - sudo apt-get -y install intltool libwxbase3.0-dev libwxgtk3.0-dev
 
@@ -16,9 +12,7 @@ script:
   - make -j$(nproc)
   - make install DESTDIR=$(readlink -f appdir) ; find appdir/
   - ( cd appdir/ ; find usr/ -type f -executable -exec sed -i -e "s|/usr|././|g" {} \; )
-  - ( cd appdir/ ; sed -i 's/\.png//g' usr/share/applications/*.desktop )
-  - rm appdir/usr/lib/libcsltools.la # No clue what this is or does
-  - grep -r libcsltools.so.1 appdir/
+  - ( cd appdir/ ; sed -i 's/\.png//g' usr/share/applications/*.desktop ) # Dear upstream, please change this in desktop.in
   - export LD_LIBRARY_PATH=appdir/usr/lib:appdir/usr/lib/csl:appdir/usr/lib/csl/plugins
   - FILES=$(find appdir/ -type f -name '*.so*' -or -name '*.so' -or -executable)
   - for FILE in $FILES; do echo $FILE; ldd $FILE; echo ===; done
@@ -30,4 +24,4 @@ script:
 
 after_success:
   - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
-  - curl --upload-file ./Cube*.AppImage https://transfer.sh/Cube*-git.$(git rev-parse --short HEAD)-x86_64.AppImage
+  - curl --upload-file ./Cube*.AppImage https://transfer.sh/Cube_Server_Lister-git.$(git rev-parse --short HEAD)-x86_64.AppImage
