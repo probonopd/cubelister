@@ -19,6 +19,7 @@ script:
   - ( cd appdir/ ; sed -i 's/\.png//g' usr/share/applications/*.desktop )
   - rm appdir/usr/lib/libcsltools.la # No clue what this is or does
   - grep -r libcsltools.so.1 appdir/
+  - export LD_LIBRARY_PATH=appdir/usr/lib:appdir/usr/lib/csl:appdir/usr/lib/csl/plugins
   - FILES=$(find appdir/ -type f -name '*.so*' -or -name '*.so' -or -executable)
   - for FILE in $FILES; do echo $FILE; ldd $FILE; echo ===; done
   - ( cd appdir/usr/lib ; ln -s libcsltools.so libcsltools.so.1 ) 
