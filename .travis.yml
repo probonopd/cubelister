@@ -8,7 +8,7 @@ before_install:
     - sudo apt-get update -qq
 
 install:
-    - sudo apt-get -y install intltool
+    - sudo apt-get -y install intltool libwxbase3.0-dev
 
 script:
   - ./autogen.sh
