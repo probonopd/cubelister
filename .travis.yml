@@ -17,6 +17,8 @@ script:
   - make install DESTDIR=$(readlink -f appdir) ; find appdir/
   - ( cd appdir/ ; find usr/ -type f -executable -exec sed -i -e "s|/usr|././|g" {} \; )
   - ( cd appdir/ ; sed -i 's/\.png//g' usr/share/applications/*.desktop )
+  - grep -r libcsltools.so.1 appdir/
+  - find appdir/ -name '*.so*' -or '*.so' -or -executable -exec ldd {} \;
   - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
   - chmod a+x linuxdeployqt*.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
