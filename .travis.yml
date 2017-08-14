@@ -19,7 +19,8 @@ script:
   - ( cd appdir/ ; sed -i 's/\.png//g' usr/share/applications/*.desktop )
   - rm appdir/usr/lib/libcsltools.la # No clue what this is or does
   - grep -r libcsltools.so.1 appdir/
-  - find appdir/ ( -name '*.so*' -or '*.so' -or -executable ) -exec ldd {} \;
+  - FILES=$(find appdir/ -type f -name '*.so*' -or -name '*.so' -or -executable)
+  - for FILE in $FILES; do echo $FILE; ldd $FILE; echo ===; done
   - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
   - chmod a+x linuxdeployqt*.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
